@@ -1,69 +1,89 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Fleet Explorer
 
-Currently, two official plugins are available:
+Browse vehicles by ZIP with fast filtering and sorting. On first load, the page prompts for a ZIP to avoid a misleading “no results” state. After a valid ZIP is entered, the left panel shows filters and the right panel lists matching vehicles.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Demo Link: https://fleet-explorer-five.vercel.app/
 
-## Expanding the ESLint configuration
+## Overview
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Enter a ZIP code to load inventory scoped to that area.
+- Filter by make and color; counts update based on current selections.
+- Sort results (e.g., price) and view vehicles in a responsive grid.
+- Clear UX flow: ZIP first, then filters and results.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- React + TypeScript
+- Vite (dev server, build)
+- Vitest + React Testing Library + JSDOM (unit tests)
+- CSS (no CSS-in-JS dependency)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Quick Start
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Requirements
+  - Node 18+ and npm 9+
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Install
+  - npm install
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Run (development)
+  - npm run dev
+  - Open the printed local URL in a browser
+
+- Build and Preview
+  - npm run build
+  - npm run preview
+
+## Scripts
+
+- npm run dev — start the dev server with hot reload
+- npm run build — production build
+- npm run preview — preview the production build locally
+- npm test — run unit tests once (CI-friendly)
+- npm run test:watch — run tests in watch mode
+- npm run test:ui — run tests with an interactive UI (if enabled)
+- npm run lint — run linter
+- npm run typecheck — TypeScript type checking (no emit)
+
+## Testing
+
+- Test runner: Vitest with globals enabled and JSDOM environment.
+- React Testing Library is used for DOM queries and user interactions.
+- Setup file extends assertions (jest-dom) and provides lightweight browser API shims where needed.
+
+Run tests:
+- npm test
+
+Watch mode:
+- npm run test:watch
+
+Notes:
+- Tests avoid console output; any stray logs should be removed.
+- IntersectionObserver is mocked in the test setup so components that lazy-render remain testable in JSDOM.
+
+## Project Structure
+
+- src/
+  - components/
+    - EmptyState/
+    - ErrorBanner/
+    - Filters/
+    - Image/
+    - RenderIfVisible
+    - SortBar/
+    - VehicleCard/
+    - VehicleGrid/
+    - ZipSearch/
+  - hooks
+    - useInventoryState.tsx
+  - mockData
+  - pages
+  - templates/
+    - InventoryTemplate/
+  - test/
+    - setup.ts (testing setup)
+  - utils.ts
+- public/
+- index.html
+
