@@ -1,0 +1,25 @@
+.sortbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 8px;
+  align-items: center;
+}
+
+.sortbar label {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.sortbar select {
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 8px 12px;
+  margin: 12px 12px;
+}
+
+.sortbar select:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 30, 0, 0.35);
+}
